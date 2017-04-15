@@ -13,23 +13,20 @@ module.exports = function() {
 
     if (depPackage.main) {
       var mainFile = './node_modules/' + package + '/' + depPackage.main;
-      var minifiedMainFile = mainFile.slice(0, mainFile.lastIndexOf('.js')) + '.min.js';
       var mainFileFolder = mainFile.slice(0, mainFile.lastIndexOf('/'));
+      var distFolderPos = mainFile.lastIndexOf('/dist'); 
 
-      packages.push(mainFileFolder + '/*.js');
+      if (distFolderPos !== -1) {
+        mainFileFolder = mainFile.substring(0, distFolderPos) + '/dist'; 
+      }
 
-      // if (fs.existsSync(minifiedMainFile)) {
-      //   console.log('minifiedMainFile: ' + minifiedMainFile);
-      //   packages.push(minifiedMainFile);
-      // } else {
-      //   console.log('mainFile: ' + mainFile);
-      //   packages.push(mainFile);
-      // }
+      packages.push(mainFileFolder + '/**/*.*');
+      packages.push('!' + mainFileFolder + '/**/*.map');
+      
     } else {
       console.log('Main file is not defined for the module ' + package);
       packages.push('./node_modules/' + package + '/**/*');
-    }
-    
+    } 
   }
 
   return packages;
