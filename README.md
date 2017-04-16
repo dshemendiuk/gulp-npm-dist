@@ -1,6 +1,6 @@
 # gulp-npm-dist
 
-Gulp plugin for listing package.json dependencies
+Gulp plugin for listing package.json dependencies and copy dist files of them to specific folder
 
 ## Get started
 
