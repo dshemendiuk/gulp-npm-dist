@@ -10,7 +10,7 @@ Gulp plugin for listing package.json dependencies
 npm install gulp-npm-dist
 ```
 
-### Examples
+### Usage
 
 ```javascript
 var gulp = require('gulp');
@@ -21,3 +21,6 @@ gulp.task('copyNpmDependenciesDist', function() {
   gulp.src(npmDist(), {base:'./'}).pipe(gulp.dest('./build'));
 });
 ```
+will create this structure:
+
+![gulp-npm-dist build structure](https://monosnap.com/file/eImO2GxnmWTy6toAdkdTn537dwGJQC.png)
