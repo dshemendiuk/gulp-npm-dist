@@ -13,6 +13,28 @@ npm install gulp-npm-dist
 ### Usage
 
 ```javascript
+//package.json example
+{
+  "name": "app",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-3-typeahead": "^4.0.2",
+    "bootstrap-select": "^1.12.1",
+    "jquery": "^3.1.1",
+    "jquery-lazyload": "^1.9.7",
+    "shufflejs": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-less": "^3.1.0",
+    "pump": "^1.0.1"
+  }
+}
+```
+
+```javascript
 var gulp = require('gulp');
 var npmDist = require('gulp-npm-dist');
 
