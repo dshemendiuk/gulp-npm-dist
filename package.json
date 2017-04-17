@@ -1,13 +1,19 @@
 {
   "name": "gulp-npm-dist",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Gulp plugin for listing package.json dependencies",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "gulp-npm-dist"
+    "gulp-npm-dist",
+    "copy libs",
+    "copy dist",
+    "copy main files",
+    "copy dependencies",
+    "gulp",
+    "npm"
   ],
   "repository": "dshemendiuk/gulp-npm-dist",
   "author": {
@@ -15,8 +21,5 @@
     "email": "dima@shemendyuk.com",
     "url": "https://github.com/dshemendiuk"
   },
-  "license": "MIT",
-  "dependencies": {
-    "gulp-flatten": "^0.3.1"
-  }
+  "license": "MIT"
 }

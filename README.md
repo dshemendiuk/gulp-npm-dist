@@ -16,11 +16,11 @@ npm install gulp-npm-dist
 var gulp = require('gulp');
 var npmDist = require('gulp-npm-dist');
 
-// Copy dependencies to build/node_modules/
+// Copy dependencies to public/libs/
 gulp.task('copyNpmDependenciesDist', function() {
-  gulp.src(npmDist(), {base:'./'}).pipe(gulp.dest('./build'));
+  gulp.src(npmDist(), {base:'./node_modules'}).pipe(gulp.dest('./public/libs'));
 });
 ```
 will create this structure:
 
-![gulp-npm-dist build structure](https://monosnap.com/file/eImO2GxnmWTy6toAdkdTn537dwGJQC.png)
+![gulp-npm-dist build structure](https://monosnap.com/file/lNq7RqJyW3CBylVgZo7gkmxRrhXmiq.png)
