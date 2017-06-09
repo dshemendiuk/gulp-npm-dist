@@ -20,9 +20,26 @@ module.exports = function() {
         mainFileFolder = mainFile.substring(0, distFolderPos) + '/dist'; 
       }
 
-      packages.push(mainFileFolder + '/**/*.*');
       packages.push('!' + mainFileFolder + '/**/*.map');
-      
+      packages.push('!' + mainFileFolder + '/src/**/*');
+      packages.push('!' + mainFileFolder + '/examples/**/*');
+      packages.push('!' + mainFileFolder + '/example/**/*');
+      packages.push('!' + mainFileFolder + '/demo/**/*');
+      packages.push('!' + mainFileFolder + '/spec/**/*');
+      packages.push('!' + mainFileFolder + '/docs/**/*');
+      packages.push('!' + mainFileFolder + '/tests/**/*');
+      packages.push('!' + mainFileFolder + '/test/**/*');
+      packages.push('!' + mainFileFolder + '/**/Gruntfile.js');
+      packages.push('!' + mainFileFolder + '/**/gulpfile.js');
+      packages.push('!' + mainFileFolder + '/**/package.json');
+      packages.push('!' + mainFileFolder + '/**/bower.json');
+      packages.push('!' + mainFileFolder + '/**/*.md');
+      packages.push('!' + mainFileFolder + '/**/*.coffee');
+      packages.push('!' + mainFileFolder + '/**/*.ts');
+      packages.push('!' + mainFileFolder + '/**/*.scss');
+      packages.push('!' + mainFileFolder + '/**/*.less');
+
+      packages.push(mainFileFolder + '/**/*.*');
     } else {
       console.log('Main file is not defined for the module ' + package);
       packages.push('./node_modules/' + package + '/**/*');
@@ -31,4 +48,3 @@ module.exports = function() {
 
   return packages;
 };
-
