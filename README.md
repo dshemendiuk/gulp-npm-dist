@@ -29,6 +29,7 @@ npm install gulp-npm-dist
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-less": "^3.1.0",
+    "gulp-npm-dist": "^0.1.2",
     "pump": "^1.0.1"
   }
 }
@@ -45,4 +46,4 @@ gulp.task('copyNpmDependenciesDist', function() {
 ```
 will create this structure:
 
-![gulp-npm-dist build structure](https://monosnap.com/file/lNq7RqJyW3CBylVgZo7gkmxRrhXmiq.png)
+!(https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
