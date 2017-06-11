@@ -7,7 +7,7 @@ Gulp plugin for listing package.json dependencies and copy dist files of them to
 ### Install
 
 ```
-npm install gulp-npm-dist
+npm install gulp-npm-dist --save-dev
 ```
 
 ### Usage
@@ -39,11 +39,12 @@ npm install gulp-npm-dist
 var gulp = require('gulp');
 var npmDist = require('gulp-npm-dist');
 
-// Copy dependencies to public/libs/
-gulp.task('copyNpmDependenciesDist', function() {
-  gulp.src(npmDist(), {base:'./node_modules'}).pipe(gulp.dest('./public/libs'));
+// Copy dependencies to ./public/libs/
+gulp.task('copy-npm-dependencies', function() {
+  gulp.src(npmDist(), {base:'./node_modules'})
+    .pipe(gulp.dest('./public/libs'));
 });
 ```
 will create this structure:
 
-!(https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
+![gulp-npm-dist build structure](https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
