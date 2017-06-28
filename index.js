@@ -6,25 +6,31 @@ module.exports = function() {
   var packages = [];
 
   for (lib in packageJson.dependencies) {
-    var depPackageBuffer = fs.readFileSync('./node_modules/' + lib + '/package.json');
-    var depPackage = JSON.parse(depPackageBuffer.toString());
     var mainFileFolder = './node_modules/' + lib;
     var libFiles = [];
 
-    if (depPackage.main) {
-      var mainFile = mainFileFolder + '/' + depPackage.main;
-      var distFolderPos;
-
-      distFolderPos = mainFile.lastIndexOf('/dist');
-      mainFileFolder = mainFile.slice(0, mainFile.lastIndexOf('/'));
-
-      if (distFolderPos !== -1) {
-        mainFileFolder = mainFile.substring(0, distFolderPos) + '/dist';
-      }
-
+    if (fs.existsSync(mainFileFolder + '/dist')) {
+      mainFileFolder = mainFileFolder + '/dist';
     } else {
-      console.log('Main file is not defined for the module ' + lib);
+      var depPackageBuffer = fs.readFileSync('./node_modules/' + lib + '/package.json');
+      var depPackage = JSON.parse(depPackageBuffer.toString());
+
+      if (depPackage.main) {
+        var mainFile = mainFileFolder + '/' + depPackage.main;
+        var distFolderPos;
+
+        distFolderPos = mainFile.lastIndexOf('/dist');
+        mainFileFolder = mainFile.slice(0, mainFile.lastIndexOf('/'));
+
+        if (distFolderPos !== -1) {
+          mainFileFolder = mainFile.substring(0, distFolderPos) + '/dist';
+        }
+
+      } else {
+        console.log('Main file is not defined for the module ' + lib);
+      }
     }
+
 
     //delete unminified versions
 

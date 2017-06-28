@@ -45,6 +45,21 @@ gulp.task('copy-npm-dependencies', function() {
     .pipe(gulp.dest('./public/libs'));
 });
 ```
+
+Usage with gulp-rename
+```javascript
+var gulp = require('gulp');
+var npmDist = require('gulp-npm-dist');
+var rename = require('gulp-rename');
+
+gulp.task('copy-npm-dependencies', function() {
+    gulp.src(npmDist(), {base:'./node_modules/'})
+        .pipe(rename(function(path) {
+            path.dirname = path.dirname.replace(/\/dist/, '').replace(/\\dist/, '');
+        }))
+        .pipe(gulp.dest('./public/libs'));
+});
+```
 will create this structure:
 
 ![gulp-npm-dist build structure](https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
