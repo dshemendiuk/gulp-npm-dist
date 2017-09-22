@@ -1,9 +1,32 @@
 var fs = require('fs');
 
+var excludePatterns = [
+  '/**/*.map',
+  '/src/**/*',
+  '/examples/**/*',
+  '/example/**/*',
+  '/demo/**/*',
+  '/spec/**/*',
+  '/docs/**/*',
+  '/tests/**/*',
+  '/test/**/*',
+  '/**/Gruntfile.js',
+  '/**/gulpfile.js',
+  '/**/package.json',
+  '/**/bower.json',
+  '/**/composer.json',
+  '/**/*.md',
+  '/**/*.coffee',
+  '/**/*.ts',
+  '/**/*.scss',
+  '/**/*.less'
+];
+
 module.exports = function (config) {
   config = config || {};
 
   var copyUnminified = config.copyUnminified || false;
+  var excludes = excludePatterns.concat(config.excludes) || excludePatterns;
 
   var buffer = fs.readFileSync('./package.json');
   var packageJson = JSON.parse(buffer.toString());
@@ -52,7 +75,7 @@ module.exports = function (config) {
     readLibFilesRecursively(mainFileFolder);
 
     if (copyUnminified === false) {
-      //delete unminified versions
+      // Delete unminified versions
       for (var i = 0; i < libFiles.length; i++) {
         var target;
         if (libFiles[i].indexOf('.min.js') > -1) {
@@ -66,28 +89,12 @@ module.exports = function (config) {
       }
     }
 
-    packages.push('!' + mainFileFolder + '/**/*.map');
-    packages.push('!' + mainFileFolder + '/src/**/*');
-    packages.push('!' + mainFileFolder + '/examples/**/*');
-    packages.push('!' + mainFileFolder + '/example/**/*');
-    packages.push('!' + mainFileFolder + '/demo/**/*');
-    packages.push('!' + mainFileFolder + '/spec/**/*');
-    packages.push('!' + mainFileFolder + '/docs/**/*');
-    packages.push('!' + mainFileFolder + '/tests/**/*');
-    packages.push('!' + mainFileFolder + '/test/**/*');
-    packages.push('!' + mainFileFolder + '/**/Gruntfile.js');
-    packages.push('!' + mainFileFolder + '/**/gulpfile.js');
-    packages.push('!' + mainFileFolder + '/**/package.json');
-    packages.push('!' + mainFileFolder + '/**/bower.json');
-    packages.push('!' + mainFileFolder + '/**/composer.json');
-    packages.push('!' + mainFileFolder + '/**/*.md');
-    packages.push('!' + mainFileFolder + '/**/*.coffee');
-    packages.push('!' + mainFileFolder + '/**/*.ts');
-    packages.push('!' + mainFileFolder + '/**/*.scss');
-    packages.push('!' + mainFileFolder + '/**/*.less');
-
+    // Excludes
+    excludes.map(function (value) {
+      packages.push('!' + mainFileFolder + value);
+    });
+    // Includes
     packages.push(mainFileFolder + '/**/*');
-
   }
 
   return packages;
