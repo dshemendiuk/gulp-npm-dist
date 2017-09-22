@@ -1,6 +1,10 @@
 var fs = require('fs');
 
-module.exports = function() {
+module.exports = function (config) {
+  config = config || {};
+
+  var copyUnminified = config.copyUnminified || false;
+
   var buffer = fs.readFileSync('./package.json');
   var packageJson = JSON.parse(buffer.toString());
   var packages = [];
@@ -31,34 +35,34 @@ module.exports = function() {
       }
     }
 
-
-    //delete unminified versions
-
     function readLibFilesRecursively(target) {
       try {
-        fs.readdirSync(target).forEach(function(path) {
+        fs.readdirSync(target).forEach(function (path) {
           var fullPath = target + '/' + path;
           if (fs.lstatSync(fullPath).isDirectory()) {
             readLibFilesRecursively(fullPath);
           }
           libFiles.push(fullPath);
         });
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
 
     readLibFilesRecursively(mainFileFolder);
 
-    for (var i=0; i<libFiles.length; i++) {
-      var target;
-      if (libFiles[i].indexOf('.min.js') > -1) {
-        target = libFiles[i].replace(/\.min\.js/, '.js');
-        packages.push('!' + libFiles[libFiles.indexOf(target)]);
-      }
-      if (libFiles[i].indexOf('.min.css') > -1) {
-        target = libFiles[i].replace(/\.min\.css/, '.css');
-        packages.push('!' + libFiles[libFiles.indexOf(target)]);
+    if (copyUnminified === false) {
+      //delete unminified versions
+      for (var i = 0; i < libFiles.length; i++) {
+        var target;
+        if (libFiles[i].indexOf('.min.js') > -1) {
+          target = libFiles[i].replace(/\.min\.js/, '.js');
+          packages.push('!' + libFiles[libFiles.indexOf(target)]);
+        }
+        if (libFiles[i].indexOf('.min.css') > -1) {
+          target = libFiles[i].replace(/\.min\.css/, '.css');
+          packages.push('!' + libFiles[libFiles.indexOf(target)]);
+        }
       }
     }
 
