@@ -69,10 +69,13 @@ will create this structure:
 
 #### `copyUnminified`
 Type: `boolean`
+
 Default: `false`
+
 
 #### `excludes`
 Type: `array`
+
 Default: 
 ```[
   '/**/*.map',
@@ -94,7 +97,8 @@ Default:
   '/**/*.ts',
   '/**/*.scss',
   '/**/*.less'
-]```
+]
+```
 
 Usage with options
 
