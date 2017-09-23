@@ -40,7 +40,7 @@ var gulp = require('gulp');
 var npmDist = require('gulp-npm-dist');
 
 // Copy dependencies to ./public/libs/
-gulp.task('copy-npm-dependencies', function() {
+gulp.task('copy:libs', function() {
   gulp.src(npmDist(), {base:'./node_modules'})
     .pipe(gulp.dest('./public/libs'));
 });
@@ -52,7 +52,7 @@ var gulp = require('gulp');
 var npmDist = require('gulp-npm-dist');
 var rename = require('gulp-rename');
 
-gulp.task('copy-npm-dependencies', function() {
+gulp.task('copy:libs', function() {
     gulp.src(npmDist(), {base:'./node_modules/'})
         .pipe(rename(function(path) {
             path.dirname = path.dirname.replace(/\/dist/, '').replace(/\\dist/, '');
@@ -63,3 +63,44 @@ gulp.task('copy-npm-dependencies', function() {
 will create this structure:
 
 ![gulp-npm-dist build structure](https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
+
+
+### Options
+
+#### `copyUnminified`
+Type: `boolean`
+Default: `false`
+
+#### `excludes`
+Type: `array`
+Default: 
+```[
+  '/**/*.map',
+  '/src/**/*',
+  '/examples/**/*',
+  '/example/**/*',
+  '/demo/**/*',
+  '/spec/**/*',
+  '/docs/**/*',
+  '/tests/**/*',
+  '/test/**/*',
+  '/**/Gruntfile.js',
+  '/**/gulpfile.js',
+  '/**/package.json',
+  '/**/bower.json',
+  '/**/composer.json',
+  '/**/*.md',
+  '/**/*.coffee',
+  '/**/*.ts',
+  '/**/*.scss',
+  '/**/*.less'
+]```
+
+Usage with options
+
+```javascript
+gulp.task("copy:libs", function () {
+    gulp.src(npmDist({ copyUnminified: true, excludes: ['/**/*.txt'] }), { base: "./node_modules" })
+        .pipe(gulp.dest("./public/libs"));
+});
+```
