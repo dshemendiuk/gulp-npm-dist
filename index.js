@@ -46,7 +46,7 @@ module.exports = function (config) {
         var mainFile = mainFileFolder + '/' + depPackage.main;
         var distFolderPos;
 
-        distFolderPos = mainFile.lastIndexOf('/dist');
+        distFolderPos = mainFile.lastIndexOf('/dist/');
         mainFileFolder = mainFile.slice(0, mainFile.lastIndexOf('/'));
 
         if (distFolderPos !== -1) {
