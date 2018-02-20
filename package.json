@@ -1,6 +1,6 @@
 {
   "name": "gulp-npm-dist",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "Gulp plugin for listing package.json dependencies",
   "main": "index.js",
   "scripts": {

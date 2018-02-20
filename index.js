@@ -2,19 +2,33 @@ var fs = require('fs');
 
 var excludePatterns = [
   '/**/*.map',
-  '/src/**/*',
-  '/examples/**/*',
-  '/example/**/*',
-  '/demo/**/*',
-  '/spec/**/*',
-  '/docs/**/*',
-  '/tests/**/*',
-  '/test/**/*',
+  '/**/src',
+  '/**/src/**/*',
+  '/**/examples',
+  '/**/examples/**/*',
+  '/**/example',
+  '/**/example/**/*',
+  '/**/demo/**/*',
+  '/**/spec',
+  '/**/spec/**/*',
+  '/**/docs',
+  '/**/docs/**/*',
+  '/**/tests',
+  '/**/tests/**/*',
+  '/**/test',
+  '/**/test/**/*',
   '/**/Gruntfile.js',
   '/**/gulpfile.js',
   '/**/package.json',
+  '/**/package-lock.json',
   '/**/bower.json',
   '/**/composer.json',
+  '/**/yarn.lock',
+  '/**/webpack.config.js',
+  '/**/README*',
+  '/**/LICENSE*',
+  '/**/CHANGELOG*',
+  '/**/*.yml',
   '/**/*.md',
   '/**/*.coffee',
   '/**/*.ts',
@@ -33,28 +47,24 @@ module.exports = function (config) {
   var packages = [];
 
   for (lib in packageJson.dependencies) {
-    var mainFileFolder = './node_modules/' + lib;
+    var mainFileDir = './node_modules/' + lib;
     var libFiles = [];
 
-    if (fs.existsSync(mainFileFolder + '/dist')) {
-      mainFileFolder = mainFileFolder + '/dist';
+    if (fs.existsSync(mainFileDir + '/dist')) {
+      mainFileDir = mainFileDir + '/dist';
     } else {
       var depPackageBuffer = fs.readFileSync('./node_modules/' + lib + '/package.json');
       var depPackage = JSON.parse(depPackageBuffer.toString());
 
       if (depPackage.main) {
-        var mainFile = mainFileFolder + '/' + depPackage.main;
-        var distFolderPos;
+        var mainFile = mainFileDir + '/' + depPackage.main;
+        var distDirPos;
 
-        distFolderPos = mainFile.lastIndexOf('/dist/');
-        mainFileFolder = mainFile.slice(0, mainFile.lastIndexOf('/'));
+        distDirPos = mainFile.lastIndexOf('/dist/');
 
-        if (distFolderPos !== -1) {
-          mainFileFolder = mainFile.substring(0, distFolderPos) + '/dist';
+        if (distDirPos !== -1) {
+          mainFileDir = mainFile.substring(0, distDirPos) + '/dist';
         }
-
-      } else {
-        console.log('Main file is not defined for the module ' + lib);
       }
     }
 
@@ -72,7 +82,7 @@ module.exports = function (config) {
       }
     }
 
-    readLibFilesRecursively(mainFileFolder);
+    readLibFilesRecursively(mainFileDir);
 
     if (copyUnminified === false) {
       // Delete unminified versions
@@ -91,10 +101,10 @@ module.exports = function (config) {
 
     // Excludes
     excludes.map(function (value) {
-      packages.push('!' + mainFileFolder + value);
+      packages.push('!' + mainFileDir + value);
     });
     // Includes
-    packages.push(mainFileFolder + '/**/*');
+    packages.push(mainFileDir + '/**/*');
   }
 
   return packages;
