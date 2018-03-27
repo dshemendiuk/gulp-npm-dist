@@ -77,41 +77,51 @@ Default: `false`
 Type: `array`
 
 Default: 
-```[
-  '/**/*.map',
-  '/src/**/*',
-  '/examples/**/*',
-  '/example/**/*',
-  '/demo/**/*',
-  '/spec/**/*',
-  '/docs/**/*',
-  '/tests/**/*',
-  '/test/**/*',
-  '/**/Gruntfile.js',
-  '/**/gulpfile.js',
-  '/**/package.json',
-  '/**/package-lock.json',
-  '/**/bower.json',
-  '/**/composer.json',
-  '/**/yarn.lock',
-  '/**/webpack.config.js',
-  '/**/README*',
-  '/**/LICENSE*',
-  '/**/CHANGELOG*',
-  '/**/*.yml',
-  '/**/*.md',
-  '/**/*.coffee',
-  '/**/*.ts',
-  '/**/*.scss',
-  '/**/*.less'
+```
+[
+  '*.map',
+  'src/**/*',
+  'examples/**/*',
+  'example/**/*',
+  'demo/**/*',
+  'spec/**/*',
+  'docs/**/*',
+  'tests/**/*',
+  'test/**/*',
+  'Gruntfile.js',
+  'gulpfile.js',
+  'package.json',
+  'package-lock.json',
+  'bower.json',
+  'composer.json',
+  'yarn.lock',
+  'webpack.config.js',
+  'README',
+  'LICENSE',
+  'CHANGELOG',
+  '*.yml',
+  '*.md',
+  '*.coffee',
+  '*.ts',
+  '*.scss',
+  '*.less'
 ]
 ```
 
-Usage with options
+#### `replaceDefaultExcludes`
+Type: `boolean`
+
+Default: `false` (append your excludes to default set)
+
+
+#### Usage with options
 
 ```javascript
-gulp.task("copy:libs", function () {
-    gulp.src(npmDist({ copyUnminified: true, excludes: ['/**/*.txt'] }), { base: "./node_modules" })
-        .pipe(gulp.dest("./public/libs"));
+gulp.task('copy:libs', function () {
+    gulp.src(npmDist({ 
+        copyUnminified: true, 
+        excludes: ['/**/*.txt'] 
+    }), { base: './node_modules' })
+        .pipe(gulp.dest('./public/libs'));
 });
 ```

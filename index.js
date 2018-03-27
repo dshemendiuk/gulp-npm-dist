@@ -1,50 +1,57 @@
 var fs = require('fs');
 
 var excludePatterns = [
-  '/**/*.map',
-  '/**/src',
-  '/**/src/**/*',
-  '/**/examples',
-  '/**/examples/**/*',
-  '/**/example',
-  '/**/example/**/*',
-  '/**/demo/**/*',
-  '/**/spec',
-  '/**/spec/**/*',
-  '/**/docs',
-  '/**/docs/**/*',
-  '/**/tests',
-  '/**/tests/**/*',
-  '/**/test',
-  '/**/test/**/*',
-  '/**/Gruntfile.js',
-  '/**/gulpfile.js',
-  '/**/package.json',
-  '/**/package-lock.json',
-  '/**/bower.json',
-  '/**/composer.json',
-  '/**/yarn.lock',
-  '/**/webpack.config.js',
-  '/**/README*',
-  '/**/LICENSE*',
-  '/**/CHANGELOG*',
-  '/**/*.yml',
-  '/**/*.md',
-  '/**/*.coffee',
-  '/**/*.ts',
-  '/**/*.scss',
-  '/**/*.less'
+  '*.map',
+  'src/',
+  'src/**/*',
+  'examples/',
+  'examples/**/*',
+  'example/',
+  'example/**/*',
+  'demo/**/*',
+  'spec/',
+  'spec/**/*',
+  'docs/',
+  'docs/**/*',
+  'tests/',
+  'tests/**/*',
+  'test/',
+  'test/**/*',
+  'Gruntfile.js',
+  'gulpfile.js',
+  'package.json',
+  'package-lock.json',
+  'bower.json',
+  'composer.json',
+  'yarn.lock',
+  'webpack.config.js',
+  'README',
+  'LICENSE',
+  'CHANGELOG',
+  '*.yml',
+  '*.md',
+  '*.coffee',
+  '*.ts',
+  '*.scss',
+  '*.less'
 ];
 
 module.exports = function (config) {
   config = config || {};
 
   var copyUnminified = config.copyUnminified || false;
-  var excludes = excludePatterns.concat(config.excludes) || excludePatterns;
+  var replaceDefaultExcludes = config.replaceDefaultExcludes || false;
+  var excludes = excludePatterns;
 
   var buffer = fs.readFileSync('./package.json');
   var packageJson = JSON.parse(buffer.toString());
   var packages = [];
+
+  if (replaceDefaultExcludes) {
+    excludes = config.excludes;
+  } else {
+    excludes = excludePatterns.concat(config.excludes);
+  }
 
   for (lib in packageJson.dependencies) {
     var mainFileDir = './node_modules/' + lib;
@@ -101,7 +108,7 @@ module.exports = function (config) {
 
     // Excludes
     excludes.map(function (value) {
-      packages.push('!' + mainFileDir + value);
+      packages.push('!' + mainFileDir + '/**/' + value);
     });
     // Includes
     packages.push(mainFileDir + '/**/*');

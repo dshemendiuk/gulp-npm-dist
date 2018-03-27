@@ -1,6 +1,6 @@
 {
   "name": "gulp-npm-dist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gulp plugin for listing package.json dependencies",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "repository": "dshemendiuk/gulp-npm-dist",
   "author": {
     "name": "Dima Shemendiuk",
-    "email": "dima@shemendyuk.com",
+    "email": "dshemendiuk@gmail.com",
     "url": "https://github.com/dshemendiuk"
   },
   "license": "MIT"
