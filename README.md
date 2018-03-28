@@ -111,7 +111,7 @@ Default:
 #### `replaceDefaultExcludes`
 Type: `boolean`
 
-Default: `false` (append your excludes to default set)
+Default: `false` (append your excludes to the default set)
 
 
 #### Usage with options
