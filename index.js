@@ -91,6 +91,14 @@ module.exports = function (config) {
 
     readLibFilesRecursively(mainFileDir);
 
+    // Includes
+    packages.push(mainFileDir + '/**/*');
+
+    //Excludes
+    excludes.map(function (value) {
+      packages.push('!' + mainFileDir + '/**/' + value);
+    });
+
     if (copyUnminified === false) {
       // Delete unminified versions
       for (var i = 0; i < libFiles.length; i++) {
@@ -106,12 +114,6 @@ module.exports = function (config) {
       }
     }
 
-    // Excludes
-    excludes.map(function (value) {
-      packages.push('!' + mainFileDir + '/**/' + value);
-    });
-    // Includes
-    packages.push(mainFileDir + '/**/*');
   }
 
   return packages;

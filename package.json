@@ -1,7 +1,7 @@
 {
   "name": "gulp-npm-dist",
-  "version": "1.0.1",
-  "description": "Gulp plugin for listing package.json dependencies",
+  "version": "1.0.2",
+  "description": "Gulp plugin for listing package.json dependencies and copy minified (dist) files of them to specific folder",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
