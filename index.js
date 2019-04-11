@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 var excludePatterns = [
   '*.map',
@@ -41,9 +42,15 @@ module.exports = function (config) {
 
   var copyUnminified = config.copyUnminified || false;
   var replaceDefaultExcludes = config.replaceDefaultExcludes || false;
+  var nodeModulesPath = config.nodeModulesPath || false;
+  var packageJsonPath = config.packageJsonPath || false;
   var excludes = excludePatterns;
 
-  var buffer = fs.readFileSync('./package.json');
+  var workingDir = process.cwd();
+  var nodeModDir = nodeModulesPath ? path.join(workingDir, nodeModulesPath) : '.';
+  var packageJsonFile = packageJsonPath ? path.join(workingDir, packageJsonPath, 'package.json') : 'package.json';
+  
+  var buffer = fs.readFileSync(packageJsonFile);
   var packageJson = JSON.parse(buffer.toString());
   var packages = [];
 
@@ -54,13 +61,13 @@ module.exports = function (config) {
   }
 
   for (lib in packageJson.dependencies) {
-    var mainFileDir = './node_modules/' + lib;
+    var mainFileDir = path.join(nodeModDir, 'node_modules', lib);
     var libFiles = [];
 
     if (fs.existsSync(mainFileDir + '/dist')) {
       mainFileDir = mainFileDir + '/dist';
     } else {
-      var depPackageBuffer = fs.readFileSync('./node_modules/' + lib + '/package.json');
+      var depPackageBuffer = fs.readFileSync(mainFileDir + '/package.json');
       var depPackage = JSON.parse(depPackageBuffer.toString());
 
       if (depPackage.main) {
