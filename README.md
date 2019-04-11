@@ -114,18 +114,6 @@ Type: `boolean`
 Default: `false` (append your excludes to the default set)
 
 
-#### `nodeModulesPath`
-Type: `string`
-
-Default: `./` (relative to `gulpfile.js`)
-
-
-#### `packageJsonPath`
-Type: `string`
-
-Default: `./` (relative to `gulpfile.js`)
-
-
 #### Usage with options
 
 ```javascript
@@ -137,6 +125,17 @@ gulp.task('copy:libs', function () {
         .pipe(gulp.dest('./public/libs'));
 });
 ```
+
+#### `nodeModulesPath`
+Type: `string`
+
+Default: `./` (relative to `gulpfile.js`)
+
+
+#### `packageJsonPath`
+Type: `string`
+
+Default: `./` (relative to `gulpfile.js`)
 
 
 #### Usage with alternative paths
