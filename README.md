@@ -114,6 +114,18 @@ Type: `boolean`
 Default: `false` (append your excludes to the default set)
 
 
+#### `nodeModulesPath`
+Type: `string`
+
+Default: `./` (relative to `gulpfile.js`)
+
+
+#### `packageJsonPath`
+Type: `string`
+
+Default: `./` (relative to `gulpfile.js`)
+
+
 #### Usage with options
 
 ```javascript
@@ -122,6 +134,24 @@ gulp.task('copy:libs', function () {
         copyUnminified: true, 
         excludes: ['/**/*.txt'] 
     }), { base: './node_modules' })
+        .pipe(gulp.dest('./public/libs'));
+});
+```
+
+
+#### Usage with alternative paths
+
+Assume the following locations: 
+* `./node_modules/`
+* `./foo/gulpfile.js`
+* `./foo/bar/package.json`
+
+```javascript
+gulp.task('copy:libs', function () {
+    gulp.src(npmDist({ 
+        nodeModulesPath: '../',
+        packageJsonPath: 'bar/'
+    }), { base: '../node_modules' })
         .pipe(gulp.dest('./public/libs'));
 });
 ```
