@@ -2,39 +2,39 @@ var fs = require('fs');
 var path = require('path');
 
 var excludePatterns = [
-  '*.map',
-  'src/',
-  'src/**/*',
-  'examples/',
-  'examples/**/*',
-  'example/',
-  'example/**/*',
-  'demo/**/*',
-  'spec/',
-  'spec/**/*',
-  'docs/',
-  'docs/**/*',
-  'tests/',
-  'tests/**/*',
-  'test/',
-  'test/**/*',
-  'Gruntfile.js',
-  'gulpfile.js',
-  'package.json',
-  'package-lock.json',
-  'bower.json',
-  'composer.json',
-  'yarn.lock',
-  'webpack.config.js',
-  'README',
-  'LICENSE',
-  'CHANGELOG',
-  '*.yml',
-  '*.md',
-  '*.coffee',
-  '*.ts',
-  '*.scss',
-  '*.less'
+  '**/*.map',
+  '**/src/',
+  '**/src/**/*',
+  '**/examples/',
+  '**/examples/**/*',
+  '**/example/',
+  '**/example/**/*',
+  '**/demo/**/*',
+  '**/spec/',
+  '**/spec/**/*',
+  '**/docs/',
+  '**/docs/**/*',
+  '**/tests/',
+  '**/tests/**/*',
+  '**/test/',
+  '**/test/**/*',
+  '**/Gruntfile.js',
+  '**/gulpfile.js',
+  '**/package.json',
+  '**/package-lock.json',
+  '**/bower.json',
+  '**/composer.json',
+  '**/yarn.lock',
+  '**/webpack.config.js',
+  '**/README',
+  '**/LICENSE',
+  '**/CHANGELOG',
+  '**/*.yml',
+  '**/*.md',
+  '**/*.coffee',
+  '**/*.ts',
+  '**/*.scss',
+  '**/*.less'
 ];
 
 module.exports = function (config) {
@@ -101,11 +101,6 @@ module.exports = function (config) {
     // Includes
     packages.push(mainFileDir + '/**/*');
 
-    //Excludes
-    excludes.map(function (value) {
-      packages.push('!' + mainFileDir + '/**/' + value);
-    });
-
     if (copyUnminified === false) {
       // Delete unminified versions
       for (var i = 0; i < libFiles.length; i++) {
@@ -122,6 +117,11 @@ module.exports = function (config) {
     }
 
   }
+
+  //Excludes
+  excludes.map(function (value) {
+    packages.push('!' + path.join(nodeModDir, 'node_modules', value));
+  });
 
   return packages;
 };
