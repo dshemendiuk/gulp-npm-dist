@@ -114,17 +114,12 @@ Type: `boolean`
 Default: `false` (append your excludes to the default set)
 
 
-#### Usage with options
+#### `onlyDependencies`
+List of specified packages to process
 
-```javascript
-gulp.task('copy:libs', function () {
-    gulp.src(npmDist({ 
-        copyUnminified: true, 
-        excludes: ['/**/*.txt'] 
-    }), { base: './node_modules' })
-        .pipe(gulp.dest('./public/libs'));
-});
-```
+Type: `array`
+
+Default: `null` 
 
 #### `nodeModulesPath`
 Type: `string`
@@ -138,7 +133,20 @@ Type: `string`
 Default: `./` (relative to `gulpfile.js`)
 
 
-#### Usage with alternative paths
+#### Usage with options
+
+```javascript
+gulp.task('copy:libs', function () {
+    gulp.src(npmDist({ 
+        copyUnminified: true, 
+        excludes: ['/**/*.txt'],
+        onlyDependencies: ['font-awesome', 'bootstrap']
+    }), { base: './node_modules' })
+        .pipe(gulp.dest('./public/libs'));
+});
+```
+
+##### Usage with alternative paths
 
 Assume the following locations: 
 * `./node_modules/`

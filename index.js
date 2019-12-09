@@ -44,15 +44,13 @@ module.exports = function (config) {
   var replaceDefaultExcludes = config.replaceDefaultExcludes || false;
   var nodeModulesPath = config.nodeModulesPath || false;
   var packageJsonPath = config.packageJsonPath || false;
+  var onlyDependencies = config.onlyDependencies || null;
   var excludes = excludePatterns;
 
   var workingDir = process.cwd();
   var nodeModDir = nodeModulesPath ? path.join(workingDir, nodeModulesPath) : '.';
-  var packageJsonFile = packageJsonPath ? path.join(workingDir, packageJsonPath, 'package.json') : 'package.json';
-  
-  var buffer = fs.readFileSync(packageJsonFile);
-  var packageJson = JSON.parse(buffer.toString());
   var packages = [];
+  var dependencies = [];
 
   if (replaceDefaultExcludes) {
     excludes = config.excludes;
@@ -60,7 +58,16 @@ module.exports = function (config) {
     excludes = excludePatterns.concat(config.excludes);
   }
 
-  for (lib in packageJson.dependencies) {
+  if (onlyDependencies && onlyDependencies.length) {
+    dependencies = onlyDependencies;
+  } else {
+    var packageJsonFile = packageJsonPath ? path.join(workingDir, packageJsonPath, 'package.json') : 'package.json';
+    var buffer = fs.readFileSync(packageJsonFile);
+    var packageJson = JSON.parse(buffer.toString());
+    dependencies = Object.keys(packageJson.dependencies);
+  }
+
+  dependencies.forEach(function(lib){
     var mainFileDir = path.join(nodeModDir, 'node_modules', lib);
     var libFiles = [];
 
@@ -121,7 +128,7 @@ module.exports = function (config) {
       }
     }
 
-  }
+  });
 
   return packages;
 };
