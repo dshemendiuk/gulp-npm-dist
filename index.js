@@ -44,7 +44,7 @@ module.exports = function (config) {
   var replaceDefaultExcludes = config.replaceDefaultExcludes || false;
   var nodeModulesPath = config.nodeModulesPath || false;
   var packageJsonPath = config.packageJsonPath || false;
-  var excludes = excludePatterns;
+  var excludes = config.excludes || [];
 
   var workingDir = process.cwd();
   var nodeModDir = nodeModulesPath ? path.join(workingDir, nodeModulesPath) : '.';
@@ -54,10 +54,8 @@ module.exports = function (config) {
   var packageJson = JSON.parse(buffer.toString());
   var packages = [];
 
-  if (replaceDefaultExcludes) {
-    excludes = config.excludes;
-  } else {
-    excludes = excludePatterns.concat(config.excludes);
+  if (!replaceDefaultExcludes) {
+    excludes = excludes.concat(excludePatterns);
   }
 
   for (lib in packageJson.dependencies) {
