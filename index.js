@@ -51,7 +51,7 @@ module.exports = function (config) {
   var packageJsonFile = packageJsonPath ? path.join(workingDir, packageJsonPath, 'package.json') : 'package.json';
   
   var buffer = fs.readFileSync(packageJsonFile);
-  var packageJson = JSON.parse(buffer.toString());
+  var packageJson = JSON.parse(buffer.toString().trim());
   var packages = [];
 
   if (!replaceDefaultExcludes) {
