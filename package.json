@@ -1,6 +1,6 @@
 {
   "name": "gulp-npm-dist",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gulp plugin for listing package.json dependencies and copy minified (dist) files of them to specific folder",
   "main": "index.js",
   "scripts": {

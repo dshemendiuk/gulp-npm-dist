@@ -62,7 +62,7 @@ gulp.task('copy:libs', function() {
 ```
 will create this structure:
 
-![gulp-npm-dist build structure](https://monosnap.com/file/3b6wW9hymbcToHB0Uko1NLPBNgYRQh.png)
+![gulp-npm-dist build structure](https://gulp-npm-dist.netlify.app/gulp-npm-dist-example.png)
 
 
 ### Options
